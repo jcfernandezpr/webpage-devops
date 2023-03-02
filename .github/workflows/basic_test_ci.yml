@@ -1,0 +1,38 @@
+name: CI Pipeline - Web Page Tests for jcfernandezpr.co
+
+on:
+  push:
+    branches: 
+      - dev
+      - staging
+      - production
+  pull_request:
+    branches: 
+      - dev
+      - staging
+      - production
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./basic
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup Nginx
+      run: |
+        sudo apt install nginx
+        sudo systemctl start nginx
+    - name: Changes index page
+      run: |
+        sudo rm /var/www/html/*.html
+        sudo cp index.html /var/www/html/index.html
+    - name: Run the tests
+      run: bash test/test_curl.sh 
+    - name: See page
+      run: curl localhost
