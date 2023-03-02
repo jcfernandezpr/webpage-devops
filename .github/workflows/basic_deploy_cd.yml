@@ -9,7 +9,7 @@ on:
 
 env:
   AWS_REGION: us-east-1
-  ECR_REPOSITORY: jcfernandezpr-webpage-docker-repo-${{ vars.STAGE }}
+  ECR_REPOSITORY: jcfernandezpr-webpage-docker-repo-${{ github.ref_name }}
 
 permissions:
   contents: read
